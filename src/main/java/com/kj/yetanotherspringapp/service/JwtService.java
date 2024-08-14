@@ -16,30 +16,34 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Component
 public class JwtService {
+	@Value("${security.jwt.expiration-time}")
 	private long expirationTime;
+	@Value("${security.jwt.secret}")
 	private String jwtSecret;
-	private SecretKey key;
+//	private SecretKey key;
 	
 	static final String PREFIX = "Bearer";
 	
-	public JwtService(@Value("${security.jwt.secret}") String jwtSecret, @Value("${security.jwt.expiration-time}") long expirationTime) {
-		this.jwtSecret = jwtSecret;
-		this.expirationTime = expirationTime;
-		this.key = getSigningKey();
-	}
-	
+//	public JwtService(@Value("${security.jwt.secret}") String jwtSecret, @Value("${security.jwt.expiration-time}") long expirationTime) {
+//		this.jwtSecret = jwtSecret;
+//		this.expirationTime = expirationTime;
+//		this.key = getSigningKey();
+//	}
+//	
 	private SecretKey getSigningKey() {
 	    byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
 	    return Keys.hmacShaKeyFor(keyBytes);
 	}
 
 	public String getToken(String username) {
+		SecretKey key = getSigningKey();
 		String token = Jwts.builder().setSubject(username)
 				.setExpiration(new Date(System.currentTimeMillis() + expirationTime)).signWith(key).compact();
 		return token;
 	}
 
 	public String getAuthUser(HttpServletRequest request) {
+		SecretKey key = getSigningKey();
 		String token = request.getHeader(HttpHeaders.AUTHORIZATION);
 		if (token != null) {
 			String user = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token.replace(PREFIX, ""))
