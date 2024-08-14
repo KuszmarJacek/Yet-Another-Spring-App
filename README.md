@@ -14,3 +14,4 @@
 - [ ] Add role based and method security for required REST endpoints and methods
 - [ ] Add authentication testing
 - [ ] Reconsider security requirements and spring authorizaiton server with Oauth or keycloak as your security provider
+- [ ] Add the ability to signup users
