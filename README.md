@@ -1,6 +1,7 @@
 ﻿# Yet-Another-Spring-App
 
 This Spring Boot app is used by me to learn and expand my knowledge of the spring ecosystem. It's a backend REST API which provides it's consumers with information about cars. It uses spring security with JWT authentication using the JJWT library, spring data jpa for communicating with the mariaDB instance and spring data rest for HATEOAS.
+Companion frotnend app written in react: (https://github.com/KuszmarJacek/Yet-Another-React-App)
 
 ## Configuration
 
